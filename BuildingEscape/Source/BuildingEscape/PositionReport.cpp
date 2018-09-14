@@ -20,6 +20,11 @@ void UPositionReport::BeginPlay()
 	Super::BeginPlay();
 
 	// ...
+	FString strObjectName = GetOwner()->GetName();
+	FTransform objectTransform = GetOwner()->GetTransform();
+	FVector objectLocation = objectTransform.GetLocation();
+	UE_LOG(LogTemp, Warning, TEXT("Position report is ready on %s at X=%.4f Y=%.4f Z=%.4f!"), *strObjectName, objectLocation.X, objectLocation.Y, objectLocation.Z);
+	UE_LOG(LogTemp, Warning, TEXT("Location: %s!"), *objectLocation.ToString());
 	
 }
 
