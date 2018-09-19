@@ -25,11 +25,21 @@ void UGrabber::BeginPlay()
 	PhysicsHandle = GetOwner()->FindComponentByClass<UPhysicsHandleComponent>();
 	if (PhysicsHandle) {
 		// Handle is found
-		UE_LOG(LogTemp, Warning, TEXT("%s->%s PhysicsHandle found!"), *GetOwner()->GetName(), *GetName());
+		
 	}
 	else {
 		UE_LOG(LogTemp, Error, TEXT("%s->%s PhysicsHandle is missing"), *GetOwner()->GetName(), *GetName());
-	}	
+	}
+
+	// Look for attached input component
+	InputComponent = GetOwner()->FindComponentByClass<UInputComponent>();
+	if (InputComponent) {
+		// InputComponent is found
+		UE_LOG(LogTemp, Warning, TEXT("%s->%s InputComponent found!"), *GetOwner()->GetName(), *GetName());
+	}
+	else {
+		UE_LOG(LogTemp, Error, TEXT("%s->%s InputComponent is missing"), *GetOwner()->GetName(), *GetName());
+	}
 }
 
 
@@ -50,6 +60,7 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 	);
 
 	
+	/// Check for hitting any PhysicsBody object
 	FHitResult HitResult;
 	FCollisionQueryParams TraceParam = FCollisionQueryParams(FName(TEXT("")), false);// , GetOwner());
 	GetWorld()->LineTraceSingleByObjectType(
