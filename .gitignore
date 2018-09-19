@@ -6,7 +6,14 @@
 */DerivedDataCache
 */Intermediate
 */Saved
-BuildingEscape/Content/StarterContent/
+BuildingEscape/Content/StarterContent/Architecture
+BuildingEscape/Content/StarterContent/Audio
+BuildingEscape/Content/StarterContent/Blueprints
+BuildingEscape/Content/StarterContent/HDRI
+BuildingEscape/Content/StarterContent/Maps
+BuildingEscape/Content/StarterContent/Materials
+BuildingEscape/Content/StarterContent/Particles
+BuildingEscape/Content/StarterContent/Textures
 
 ######################
 # VS Generated Files #
