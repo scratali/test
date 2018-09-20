@@ -34,7 +34,7 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	// If the physics handle is attached, move the object that we're holding
-	if (PhysicsHandle->GetGrabbedComponent())
+	if (PhysicsHandle && PhysicsHandle->GetGrabbedComponent())
 	{
 		PhysicsHandle->SetTargetLocation(GetReachLineEnd());
 	}
@@ -72,7 +72,7 @@ void UGrabber::Grab()
 	FHitResult Hit = GetFirstPhysicsBodyInReach();
 	auto ComponentToGrab = Hit.GetComponent();
 
-	if (ComponentToGrab != NULL && Hit.bBlockingHit)
+	if (ComponentToGrab != NULL && Hit.bBlockingHit && PhysicsHandle)
 	{
 		PhysicsHandle->GrabComponentAtLocationWithRotation(ComponentToGrab, NAME_None, ComponentToGrab->GetOwner()->GetActorLocation(), ComponentToGrab->GetOwner()->GetActorRotation());
 	}
@@ -81,7 +81,8 @@ void UGrabber::Grab()
 
 void UGrabber::Release()
 {
-	PhysicsHandle->ReleaseComponent();
+	if(PhysicsHandle)
+		PhysicsHandle->ReleaseComponent();
 }
 
 
@@ -93,11 +94,6 @@ const FHitResult UGrabber::GetFirstPhysicsBodyInReach()
 	GetWorld()->LineTraceSingleByObjectType(
 		HitResult, GetReachLineStart(), GetReachLineEnd(), FCollisionObjectQueryParams(ECollisionChannel::ECC_PhysicsBody), TraceParam
 	);
-
-	if (HitResult.bBlockingHit) {
-		AActor* ActorHit = HitResult.GetActor();
-		UE_LOG(LogTemp, Warning, TEXT("HitResult: %s"), *(ActorHit->GetName()));
-	}
 
 	return HitResult;
 }
